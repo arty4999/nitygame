@@ -45,4 +45,4 @@ io.on('connection', function(socket){
         // emit all players to remove the disconnected
         io.emit('disconnect', socket.id);
     });
-})
+}) // part 1 ended here
