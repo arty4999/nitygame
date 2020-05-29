@@ -41,11 +41,42 @@ function create() {
   this.socket.on("newPlayer", function (playerInfo) {
     addOtherPlayers(self, playerInfo);
   });
-  this.socket.on('disconnect', function(playerId){
-      self.otherPlayers.getChildren().forEach(function(otherPlayer){
-          if(playerId === otherPlayer.playerId) {
-              otherPlayer.destroy();
-          }
-      });
+  this.socket.on("disconnect", function (playerId) {
+    self.otherPlayers.getChildren().forEach(function (otherPlayer) {
+      if (playerId === otherPlayer.playerId) {
+        otherPlayer.destroy();
+      }
+    });
+  }); 
+  this.socket.on("playerMoved", function (playerInfo) {
+    self.otherPlayers.getChildren().forEach(function (otherPlayer) {
+      if (playerId === otherPlayer.playerId) {
+        otherPlayer.setRotation(playerInfo.rotation);
+        otherPlayer.setPosition(playerInfo.x, playerInfo.y);
+      }
+    });
+  });
+  this.cursors = this.input.keyboard.createCursorKeys();
+
+  this.nityScoreText = this.add.text(16, 16, "", {
+    fontSize: "32px",
+    fill: "#0000FF",
+  });
+  this.artyScoreText = this.add.text(584, 16, "", {
+    fontSize: "32px",
+    fill: "#FF0000",
+  });//how to get credit without doin anything 1 on 1
+
+  this.socket.on('scoreUpdate', function(scores){
+      self.nityScoreText.setText('Nity:' + scores.nity);
+      self.artyScoreText.setText('Arty:' + scores.arty);
+  });
+
+  this.socket.on('starLocation', function(starLocation){
+      if (self.star) self.star.destroy();
+      self.star = self.physics.add.image(starLocation.x, starLocation.y, 'star');
+      self.physics.add.overlap(self.ship, self.star, function() {
+          this.socket.emit('starCollected');
+      }, null, self);
   });
 }
