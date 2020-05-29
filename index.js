@@ -44,5 +44,30 @@ io.on('connection', function(socket){
         delete players[socket.id];
         // emit all players to remove the disconnected
         io.emit('disconnect', socket.id);
+    }); // part 1 ended here
+
+  // when a player moves, update the player data
+  socket.on('playerMovement', function (movementData) {
+    players[socket.id].x = movementData.x;
+    players[socket.id].y = movementData.y;
+    players[socket.id].rotation = movementData.rotation;
+    // emit a message to all players about the player that moved
+    socket.broadcast.emit('playerMoved', players[socket.id]);
+  });
+
+    socket.on('starCollected', function() {
+        if (players[socket.id].team === 'Nity') {
+            scores.Nity += 10;
+        } else {
+            scores.Arty +10;
+        }
+    star.x = Math.floor(Math.random() * 700) + 50;
+    star.y = Math.floor(Math.random() * 500) + 50;
+    io.emit('starlocation', star);
+    io.emit('scoreUpdate', scores);
     });
-}) // part 1 ended here
+});
+
+server.listen(8081, function () {
+    console.log(`Listening on ${server.address().port}`);
+  });  
