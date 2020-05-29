@@ -58,12 +58,12 @@ var config = {
     });
     this.cursors = this.input.keyboard.createCursorKeys();
   
-    this.blueScoreText = this.add.text(16, 16, '', { fontSize: '32px', fill: '#0000FF' });
-    this.redScoreText = this.add.text(584, 16, '', { fontSize: '32px', fill: '#FF0000' });
+    this.nityScoreText = this.add.text(16, 16, '', { fontSize: '32px', fill: '#0000FF' });
+    this.artyScoreText = this.add.text(584, 16, '', { fontSize: '32px', fill: '#FF0000' });
     
     this.socket.on('scoreUpdate', function (scores) {
-      self.blueScoreText.setText('Blue: ' + scores.blue);
-      self.redScoreText.setText('Red: ' + scores.red);
+      self.nityScoreText.setText('nity: ' + scores.nity);
+      self.artyScoreText.setText('arty: ' + scores.arty);
     });
   
     this.socket.on('starLocation', function (starLocation) {
@@ -77,7 +77,7 @@ var config = {
   
   function addPlayer(self, playerInfo) {
     self.ship = self.physics.add.image(playerInfo.x, playerInfo.y, 'ship').setOrigin(0.5, 0.5).setDisplaySize(53, 40);
-    if (playerInfo.team === 'blue') {
+    if (playerInfo.team === 'nity') {
       self.ship.setTint(0x0000ff);
     } else {
       self.ship.setTint(0xff0000);
@@ -89,7 +89,7 @@ var config = {
   
   function addOtherPlayers(self, playerInfo) {
     const otherPlayer = self.add.sprite(playerInfo.x, playerInfo.y, 'otherPlayer').setOrigin(0.5, 0.5).setDisplaySize(53, 40);
-    if (playerInfo.team === 'blue') {
+    if (playerInfo.team === 'nity') {
       otherPlayer.setTint(0x0000ff);
     } else {
       otherPlayer.setTint(0xff0000);
