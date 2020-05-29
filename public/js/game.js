@@ -65,7 +65,7 @@ function create() {
   this.artyScoreText = this.add.text(584, 16, "", {
     fontSize: "32px",
     fill: "#FF0000",
-  });//how to get credit without doin anything 1 on 1
+  });//
 
   this.socket.on('scoreUpdate', function(scores){
       self.nityScoreText.setText('Nity:' + scores.nity);
