@@ -9,7 +9,7 @@
   "author": "yeet",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.3",
+    "express": "^4.17.1",
     "socket.io": "^3.1.2"
   }
 }
