@@ -6,10 +6,11 @@
   "scripts": {
     "start": "node server.js"
   },
-  "author": "yeet",
+  "author": "Arty",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "xmlhttprequest-ssl": ">=1.6.2",
     "socket.io": "^3.1.2"
   }
 }
